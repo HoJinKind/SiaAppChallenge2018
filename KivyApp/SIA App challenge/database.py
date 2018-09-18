@@ -23,3 +23,5 @@ class database:
         
 
 if __name__ == '__main__':
+    fb= database()
+    fb.set_plates([1,1,1])
