@@ -1,0 +1,370 @@
+#:import COLOR kivy.utils.get_color_from_hex
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
+#:set RED "#B32230"
+#:set GREEN "#8AA943"
+#:set YELLOW "#FBC111"
+#:set WHITE "#FFFFFF"
+
+<GreenBatt@Label>
+    canvas.before:
+        Color:
+            rgb: COLOR("#FFFFFF")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgb: COLOR("#8AA943")
+        Rectangle:
+            pos: self.x + self.width / 10, self.y + self.height / 10
+            size: self.width * 8/10, self.height * 19/20
+
+<RedBatt@Label>
+    canvas.before:
+        Color:
+            rgb: COLOR("#FFFFFF")
+        Rectangle:
+            pos: self.pos
+            size: self.size
+        Color:
+            rgb: COLOR("#B32230")
+        Rectangle:
+            pos: self.x + self.width / 10, self.y + self.height / 10
+            size: self.width * 8/10, self.height * 19/20
+
+
+<WrappedLabel@Label>:
+    color: 0,0.5,0,1
+    size_hint_y: None
+    height: self.texture_size[1] + (self.texture_size[1]/2)
+    markup: True
+    font_name: "Lato"
+
+<Button>
+    font_name: "Lato"
+    bold: True
+    border: (2, 2, 2, 2)
+
+<GreenButton@Button>:
+    halign : "center"
+    valign : "center"
+    text_size: self.size
+    font_size: min(self.height, self.width) / 2
+    background_color: COLOR("#8AA943")
+    background_normal: "./images/button_normal.png"
+    background_down: "./images/button_down.png"
+    border: (2, 2, 2, 2)
+
+<WhiteButton@Button>:
+    halign : "center"
+    valign : "center"
+    text_size: self.size
+    font_size: min(self.height, self.width) / 5
+    background_normal: "./images/button_normal.png"
+    background_down: "./images/button_down.png"
+    background_color: COLOR("#FFFFFF")
+    color: COLOR("000000")
+
+<YellowButton@Button>:
+    halign : "center"
+    valign : "center"
+    text_size: self.size
+    font_size: min(self.height, self.width) / 2
+    background_normal: "./images/button_normal.png"
+    background_down: "./images/button_down.png"
+    background_color: COLOR("#FBC111")
+    border: (2, 2, 2, 2)
+
+<StatsButton@Button>
+    halign : "center"
+    text_size: self.size
+    font_size: min(self.height, self.width)
+    background_normal: "./images/button_normal.png"
+    background_down: "./images/button_down.png"
+    background_color: COLOR("#FFFFFF")
+    color: COLOR("000000")
+
+<Separator@Widget>
+    size_hint_y: None
+    thickness: 1
+    margin: 2
+    height: self.thickness + 2 * self.margin
+    color: 1., .0, .0
+    canvas:
+        Color:
+            rgb: COLOR("000000")
+        Rectangle:
+            pos: self.x + self.margin, self.y + self.margin + 1
+            size: self.width - 2 * self.margin , self.thickness
+
+<Separator2@Widget>
+    size_hint_y: None
+    thickness: 0.5
+    margin: 2
+    height: self.thickness + 2 * self.margin
+    color: 1., .0, .0
+    canvas:
+        Color:
+            rgb: COLOR("000000")
+        Rectangle:
+            pos: self.x + 500, self.y
+            size: self.width - 1000, self.thickness
+
+<SIAUIRoot>:
+    orientation: "vertical"
+    ActionBar:
+        ActionView:
+            ActionPrevious:
+                title: "SIA App Challenge"
+                with_previous: False
+            ActionButton:
+                on_release: app.root.change_screen("start_screen")
+                canvas:
+                    Rectangle:
+                        source: 'sia_logo.jpg' #Update image of home here
+                        pos: self.pos
+                        size: self.size
+    ScreenManager:
+        id: screen_manager
+        ButtonScreen:
+            name: "button_screen"
+            manager: screen_manager
+        StartScreen:
+            id : start_screen
+            name: "start_screen"
+            manager: screen_manager
+        SavingsScreen:
+            id : savings_screen
+            name : "savings_screen"
+            manager: screen_manager
+
+<ButtonScreen@Screen>:
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+        WhiteButton:
+            on_release:
+                app.root.change_screen("start_screen", NoTransition())
+            Image:
+                source: "sia_logo.jpg"
+                keep_ratio: True
+                width : self.parent.width / 2
+                height: self.parent.height / 2
+                pos: self.parent.width / 4 , self.parent.height / 4
+
+<StartScreen>
+    accord_1: accord_1
+    accord_2: accord_2
+    Accordion:
+        orientation: "horizontal"
+        AccordionItem:
+            id: accord_1
+            title: "Title 1"
+            Widget:
+                size_hint: None, None
+                canvas:
+                    Rectangle:
+                        pos: self.parent.pos
+                        size: self.parent.size
+                        source: "Next_screen.jpeg"
+        AccordionItem:
+            id: accord_2
+            title: "Title 2"
+            BoxLayout:
+                orientation: "vertical"
+                GreenButton:
+                    text: "Flight 192: SIN to CPH"
+                    size_hint_y: 0.1
+                GridLayout:
+                    rows: 1
+                    BoxLayout:
+                        orientation: "vertical"
+                        WhiteButton:
+                            text: "CPH Supply"
+                        WhiteButton:
+                            id:wareHouseLargePlates
+                            text: "Large Plates: \n" + "0"
+                        WhiteButton:
+                            text: "Chicken Noodles: \n" + "300"
+                        WhiteButton:
+                            text: "Coffee Cups: \n" + "450"
+                        WhiteButton:
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        WhiteButton:
+                            text: "Large Plates"
+                        Label:
+                            id : green1
+                            green_batt: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 1/2
+                                Color:
+                                    rgb: self.green_batt
+                                Rectangle:
+                                    pos: self.x + self.width / 4, self.y + self.height / 4
+                                    size: self.width * 0.5, self.height * 6/10
+                        Label:
+                            id : green2
+                            green_batt2: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt2
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : green3
+                            green_batt3: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt3
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : green4
+                            green_batt4: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt4
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : green5
+                            green_batt5: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt5
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        WhiteButton:
+                            id : refill_plate
+                            text: "Refill: " + "1"
+                        WhiteButton:
+                            id : left_plate
+                            text: "Left: " + "1"
+
+                    BoxLayout:
+                        orientation: "vertical"
+                        WhiteButton:
+                            text: "Chicken noodles"
+                        Label:
+                            id : red1
+                            red_batt: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    id : green1
+                                    rgb: self.red_batt
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 1/2
+                                Color:
+                                    rgb: self.red_batt
+                                Rectangle:
+                                    pos: self.x + self.width / 4, self.y + self.height / 4
+                                    size: self.width * 0.5, self.height * 6/10
+                        Label:
+                            id : red2
+                            red_batt2: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.red_batt2
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : red3
+                            red_batt3:(0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.green_batt3
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : red4
+                            red_batt4: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.red_batt4
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        Label:
+                            id : red5
+                            red_batt5: (0.49, 1, 0)
+                            canvas.before:
+                                Color:
+                                    rgb: COLOR("#FFFFFF")
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                                Color:
+                                    rgb: self.red_batt5
+                                Rectangle:
+                                    pos: self.x + self.width / 10, self.y + self.height / 10
+                                    size: self.width * 8/10, self.height * 19/20
+                        WhiteButton:
+                            id : refill_nood
+                            text: "Refill: " + "0"
+                        WhiteButton:
+                            id : left_nood
+                            text: "Left: " + "100"
+
+<SavingsScreen>:
+    BoxLayout:
+        orientation: "vertical"
+        Image:
+            source: "Next_screen.jpeg"
