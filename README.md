@@ -11,3 +11,6 @@ By calling SIA API, we are able to get quantity of supply at warehouse.</br >
 </br>For fully stocked preflight recordings.</br>
 <img src="https://github.com/HoJinKind/SiaAppChallenge2018/blob/master/images/Screenshot%20(87).png" width="425"/> 
 </br>Example of updated supply after flight.</br>
+
+## Rpi/hardware
+A modular device which is small and easily detachable. </br >Powered by portable batteries, it uses sensors to determine the quantity of pates at that instant, and update Firebase.
