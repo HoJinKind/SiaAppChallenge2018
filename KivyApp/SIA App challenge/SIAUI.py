@@ -42,10 +42,8 @@ import datetime
 from kivy.properties import ObjectProperty
 from kivy.properties import ObjectProperty
 import call_SIA_API
-import database
 
 LabelBase.register(name="Lato", fn_regular="Lato-Regular.ttf" ,fn_bold="Lato-Bold.ttf")
-fb = database.database()
 
 # Create the screen manager
 class SIAUIRoot(BoxLayout):
@@ -77,7 +75,8 @@ class SIAUIRoot(BoxLayout):
 
     def change_colour(self,dt):
         #Retrieve data from firebase
-        batt_state = fb.get_plates()
+        batt_state = [1,1,1]
+        #use of Firebase package has been removed as Publishing credentials as public would result in firebase being suspended
         used= 0
         for bar in batt_state:
             if bar == 0:
