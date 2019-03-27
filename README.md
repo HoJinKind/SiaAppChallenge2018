@@ -1,5 +1,6 @@
 # SiaAppChallenge2018
 the SIA application we created consist of two parts to the code. The one on the device, and the Kivy application.
+link to the video can be found:[here](https://www.youtube.com/watch?v=4jCmanZKkEM)
 
 ## Kivy App
 The application is meant to be accessed from the warehouse. </br >The main file will be the SIAUI.py.
